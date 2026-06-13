@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso + Galeria 🎭</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Estilo do aviso inicial */
+        .aviso-container {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 450px;
+            width: 100%;
+            border: 1px solid #334155;
+            text-align: center;
+        }
+
+        .aviso-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+        }
+
+        .meme-img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #475569;
+        }
+
+        .botoes-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            height: 60px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        #sim {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        }
+
+        #sim:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+        }
+
+        #nao {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+            position: relative; 
+            z-index: 10;
+        }
+
+        /* Estilo da galeria (inicialmente escondido) */
+        .galeria-container {
+            display: none;
+            width: 100%;
+            max-width: 700px;
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            border: 1px solid #334155;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .galeria-container h1 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: #38bdf8;
+            text-shadow: 0 2px 10px rgba(56, 189, 248, 0.2);
+        }
+
+        #containerMidia {
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #020617;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #475569;
+        }
+
+        .midia {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        .controles {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .controles button {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: #334155;
+            border: 1px solid #475569;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .controles button:hover {
+            background: #475569;
+            border-color: #64748b;
+            transform: translateY(-2px);
+        }
+
+        .controles button:active {
+            transform: translateY(0);
+        }
+
+        #contador {
+            margin-top: 20px;
+            font-size: 15px;
+            color: #94a3b8;
+            font-weight: 500;
+            background: #0f172a;
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .voltar-btn {
+            margin-top: 20px;
+            background: #475569;
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+
+        .voltar-btn:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Aviso inicial (página 1) -->
+    <div id="avisoInicial" class="aviso-container">
+        <h2>Você completa 18 anos esse ano? 🤨</h2>
+        <img class="meme-img" src="images.jfif">
+        
+        <div class="botoes-container">
+            <button id="sim">✅ Sim</button>
+            <button id="nao">❌ Não</button>
+        </div>
+    </div>
+
+    <!-- Galeria (página 2, escondida inicialmente) -->
+    <div id="galeriaConteudo" class="galeria-container">
+        <h1>Minha Galeria Memorável 🤝</h1>
+        
+        <div id="containerMidia"></div>
+
+        <div class="controles">
+            <button onclick="anterior()">⬅ Anterior</button>
+            <button onclick="proximo()">Próximo ➡</button>
+        </div>
+
+        <div id="contador"></div>
+        
+        <button class="voltar-btn" onclick="voltarParaAviso()">🔙 Voltar ao início</button>
+    </div>
+
+    <script>
+        // ==================== LÓGICA DO BOTÃO "NÃO" QUE FUGE ====================
+        const botaoNao = document.getElementById("nao");
+        const avisoDiv = document.getElementById("avisoInicial");
+        const galeriaDiv = document.getElementById("galeriaConteudo");
+
+        function moverBotao() {
+            if (botaoNao.style.position !== "fixed") {
+                botaoNao.style.position = "fixed";
+            }
+
+            const larguraTela = window.innerWidth;
+            const alturaTela = window.innerHeight;
+
+            const larguraBotao = botaoNao.offsetWidth;
+            const alturaBotao = botaoNao.offsetHeight;
+
+            const margem = 50;
+
+            let novaPosicaoX = Math.random() * (larguraTela - larguraBotao - (margem * 2)) + margem;
+            let novaPosicaoY = Math.random() * (alturaTela - alturaBotao - (margem * 2)) + margem;
+            
+            // Garantir que não saia da tela
+            novaPosicaoX = Math.max(margem, Math.min(novaPosicaoX, larguraTela - larguraBotao - margem));
+            novaPosicaoY = Math.max(margem, Math.min(novaPosicaoY, alturaTela - alturaBotao - margem));
+
+            botaoNao.style.left = novaPosicaoX + "px";
+            botaoNao.style.top = novaPosicaoY + "px";
+        }
+
+        // Verificar se o botão ainda existe antes de adicionar evento
+        if (botaoNao) {
+            document.addEventListener("mousemove", (e) => {
+                const rect = botaoNao.getBoundingClientRect();
+                
+                // Se o botão está escondido ou sumiu, não fazer nada
+                if (!botaoNao.parentElement) return;
+                
+                const distancia = Math.sqrt(
+                    Math.pow(e.clientX - (rect.left + rect.width / 2), 2) +
+                    Math.pow(e.clientY - (rect.top + rect.height / 2), 2)
+                );
+
+                if (distancia < 100) {
+                    moverBotao();
+                }
+            });
+        }
+
+        // ==================== LÓGICA DA GALERIA ====================
+        // Lista de arquivos (mantida sua estrutura original)
+        const arquivos = [
+            { tipo: "imagem", src: "foto2.jpeg" },
+            { tipo: "imagem", src: "foto10.jpeg" },
+            { tipo: "imagem", src: "foto3.jpeg" },
+            { tipo: "imagem", src: "foto4.jpeg" },
+            { tipo: "imagem", src: "foto11.jpeg" },
+            { tipo: "imagem", src: "foto5.jpeg" },
+            { tipo: "imagem", src: "foto12.jpeg" },
+            { tipo: "imagem", src: "foto7.jpeg" },
+            { tipo: "imagem", src: "foto8.jpeg" },
+            { tipo: "imagem", src: "foto9.jpeg" },
+            { tipo: "imagem", src: "foto6.jpeg" },
+            { tipo: "imagem", src: "foto1.jpeg" },
+        ];
+
+        let indice = 0;
+
+        function carregarMidia() {
+            const container = document.getElementById("containerMidia");
+            const contador = document.getElementById("contador");
+
+            if (!container) return;
+
+            container.innerHTML = "";
+
+            if (arquivos[indice].tipo === "imagem") {
+                const img = document.createElement("img");
+                img.className = "midia";
+                img.src = arquivos[indice].src;
+                img.alt = `Slide ${indice + 1}`;
+                img.onerror = function() {
+                    // Se a imagem não carregar, mostra um placeholder
+                    this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23334155'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='12'%3EImagem não encontrada%3C/text%3E%3C/svg%3E";
+                };
+                container.appendChild(img);
+            } else {
+                const video = document.createElement("video");
+                video.className = "midia";
+                video.controls = true;
+                const source = document.createElement("source");
+                source.src = arquivos[indice].src;
+                source.type = "video/mp4";
+                video.appendChild(source);
+                container.appendChild(video);
+            }
+
+            contador.textContent = `Item ${indice + 1} de ${arquivos.length}`;
+        }
+
+        function proximo() {
+            indice++;
+            if (indice >= arquivos.length) {
+                indice = 0;
+            }
+            carregarMidia();
+        }
+
+        function anterior() {
+            indice--;
+            if (indice < 0) {
+                indice = arquivos.length - 1;
+            }
+            carregarMidia();
+        }
+
+        // ==================== FUNÇÕES DE NAVEGAÇÃO ====================
+        function mostrarGaleria() {
+            avisoDiv.style.display = "none";
+            galeriaDiv.style.display = "block";
+            // Resetar o índice e carregar a primeira mídia
+            indice = 0;
+            carregarMidia();
+            
+            // Resetar posição do botão "Não" se ele ainda existir
+            if (botaoNao) {
+                botaoNao.style.position = "relative";
+                botaoNao.style.left = "auto";
+                botaoNao.style.top = "auto";
+            }
+        }
+
+        function voltarParaAviso() {
+            galeriaDiv.style.display = "none";
+            avisoDiv.style.display = "block";
+            
+            // Resetar posição do botão "Não"
+            if (botaoNao) {
+                botaoNao.style.position = "relative";
+                botaoNao.style.left = "auto";
+                botaoNao.style.top = "auto";
+            }
+        }
+
+        // ==================== EVENTOS ====================
+        const botaoSim = document.getElementById("sim");
+        if (botaoSim) {
+            botaoSim.addEventListener("click", function(e) {
+                e.preventDefault();
+                mostrarGaleria();
+            });
+        }
+
+        // Tornar funções globais para os botões da galeria
+        window.proximo = proximo;
+        window.anterior = anterior;
+        window.voltarParaAviso = voltarParaAviso;
+
+        // Inicialização
+        carregarMidia();
+    </script>
+</body>
+</html>
